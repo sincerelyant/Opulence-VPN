@@ -1,0 +1,15 @@
+# Dependency directories
+node_modules/
+jspm_packages/
+
+# Optional files
+.npm
+.git
+
+# dotenv environment variables file
+.env
+.env.test
+
+# Extra directories
+dist/
+bin/
