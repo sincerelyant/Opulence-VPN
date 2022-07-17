@@ -80,8 +80,8 @@ function updateLocalDirectory(net) {
   const { get } = require("https");
   const { JSDOM } = require("jsdom");
   const dir = "remote";
-  const server = `https://opulencevpn.com/`;
-  const fetchRemoteFiles = `https://opulencevpn.com:443/remote/`;
+  const server = `url`;
+  const fetchRemoteFiles = `url`;
 
   function getRemoteFile(href, filename, onComplete) {
     get(server + href, function (response) {
@@ -263,7 +263,7 @@ function main() {
       Menu.buildFromTemplate([
         { label: "Opulence VPN", type: "normal", enabled: false },
         { type: "separator" },
-        { label: `Check for Updates`, type: "normal" },
+        { label: `Check for Updates`, click: checkForUpdates, type: "normal" },
         { label: `Quit`, click: app.quit, type: "normal" },
       ])
     );
@@ -294,29 +294,25 @@ autoUpdater.on("update-downloaded", (info) => {
     type: "info",
     buttons: ["Ok"],
     title: "Opulence VPN",
-    detail: "Update downloaded.",
+    detail: "A new update has been downloaded, please restart the app to install the update.",
   };
 
   dialog.showMessageBox(dialogOpts);
 });
 
-autoUpdater.on("checking-for-update", () => {
-  dialog.showMessageBox("Checking update");
-});
-autoUpdater.on("update-available", (info) => {
-  dialog.showMessageBox("Update avaliable");
-});
+function checkForUpdates() {
+  autoUpdater.checkForUpdatesAndNotify();
+  autoUpdater.on("update-not-available", (info) => {
+    const dialogOpts = {
+      type: "info",
+      buttons: ["Ok"],
+      title: "Opulence VPN",
+      detail: "You're on the latest version.",
+    };
 
-autoUpdater.on("error", (err) => {
-  const dialogOpts = {
-    type: "info",
-    buttons: ["Ok"],
-    title: "Opulence VPN",
-    detail: "Error: " + err,
-  };
-
-  dialog.showErrorBox(dialogOpts);
-});
+    dialog.showMessageBox(dialogOpts);
+  });
+}
 
 app.on("before-quit", () => (initApp = true));
 
