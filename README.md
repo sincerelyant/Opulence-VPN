@@ -1,3 +1,3 @@
 # Opulence-VPN
 
-Opulence VPN is a privacy focused VPN (Virutal Private Network) provider. 
+This is the official repository for Opulence VPN, a privacy focused VPN (Virutal Private Network).
